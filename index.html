@@ -9,7 +9,7 @@ body{
 font-family:Arial,sans-serif;
 background:#f4f6fa;
 margin:0;
-padding:25px;
+padding:20px;
 text-align:center;
 color:#172033
 }
@@ -17,25 +17,19 @@ color:#172033
 .card{
 background:white;
 border-radius:22px;
-padding:25px;
-max-width:480px;
+padding:22px;
+max-width:500px;
 margin:auto;
 box-shadow:0 5px 25px #0001
 }
 
-h1{
-font-size:30px
-}
-
-p{
-color:#667085;
-line-height:1.5
-}
+h1{font-size:29px}
+p{color:#667085;line-height:1.5}
 
 button{
 width:100%;
 padding:16px;
-margin-top:15px;
+margin-top:14px;
 border:0;
 border-radius:14px;
 background:#1769ff;
@@ -44,15 +38,27 @@ font-size:17px;
 font-weight:bold
 }
 
-#camera{
+video{
 width:100%;
-margin-top:20px;
+margin-top:18px;
 border-radius:18px;
 background:#111
 }
 
-.hidden{
-display:none
+.hidden{display:none}
+
+.guide{
+margin-top:15px;
+padding:15px;
+background:#eef4ff;
+border-radius:14px;
+text-align:left
+}
+
+.result{
+font-size:42px;
+font-weight:bold;
+margin:20px 0
 }
 </style>
 </head>
@@ -67,17 +73,23 @@ display:none
 Measure your pupil distance using your phone camera.
 </p>
 
+<div class="guide">
+<b>Before you start</b><br><br>
+You will need a normal bank or credit card.
+Hold the card flat beside your face so the app has a known-size reference.
+</div>
+
 <button onclick="startCamera()">
 Start measurement
 </button>
 
 <video id="camera" class="hidden" autoplay playsinline></video>
 
-<button id="photo" class="hidden" onclick="takePhoto()">
+<button id="capture" class="hidden" onclick="capturePhoto()">
 Take photo
 </button>
 
-<div id="result"></div>
+<div id="message"></div>
 
 </div>
 
@@ -91,7 +103,9 @@ async function startCamera(){
 try{
 
 stream=await navigator.mediaDevices.getUserMedia({
-video:{facingMode:"user"},
+video:{
+facingMode:"user"
+},
 audio:false
 });
 
@@ -99,20 +113,25 @@ video.srcObject=stream;
 
 video.classList.remove("hidden");
 
-document.getElementById("photo").classList.remove("hidden");
+document.getElementById("capture")
+.classList.remove("hidden");
+
+document.getElementById("message").innerHTML=
+"<p>Look straight at the camera. Keep your head still and make sure both eyes and the reference card are visible.</p>";
 
 }catch(error){
 
-alert("Please allow camera access.");
+document.getElementById("message").innerHTML=
+"<p><b>Camera access was not allowed.</b><br>Please allow camera access and try again.</p>";
 
 }
 
 }
 
-function takePhoto(){
+function capturePhoto(){
 
-document.getElementById("result").innerHTML=
-"<h2>Photo captured ✓</h2><p>Your PD measurement will appear here once the measurement system is added.</p>";
+document.getElementById("message").innerHTML=
+"<div class='result'>Photo captured ✓</div><p>Photo received. The pupil-detection and calibration engine will be added next.</p>";
 
 }
 
