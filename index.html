@@ -3,7 +3,39 @@
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PD Measure</title>
+
+<style>
+body{
+font-family:Arial;
+background:#f4f6fa;
+text-align:center;
+padding:25px;
+}
+
+button{
+padding:16px;
+width:100%;
+font-size:18px;
+border:0;
+border-radius:12px;
+background:#1769ff;
+color:white;
+margin-top:15px;
+}
+
+video{
+width:100%;
+margin-top:20px;
+border-radius:15px;
+}
+
+.hidden{
+display:none;
+}
+</style>
+
 </head>
+
 <body>
 
 <h1>PD Measure</h1>
@@ -11,6 +43,41 @@
 <p>Before you start</p>
 
 <p>You will need a normal bank or credit card.</p>
+
+<button onclick="startCamera()">
+Start measurement
+</button>
+
+<video id="camera" class="hidden" autoplay playsinline></video>
+
+<script>
+
+async function startCamera(){
+
+try{
+
+const stream =
+await navigator.mediaDevices.getUserMedia({
+video:{facingMode:"user"},
+audio:false
+});
+
+const camera =
+document.getElementById("camera");
+
+camera.srcObject = stream;
+
+camera.classList.remove("hidden");
+
+}catch(error){
+
+alert("Please allow camera access.");
+
+}
+
+}
+
+</script>
 
 </body>
 </html>
