@@ -3,6 +3,120 @@
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PD Measure</title>
+
 <style>
-body{font-family:Arial,sans-serif;background:#f4f6fa;margin:0;padding:25px;text-align:center;color:#172033}
-.card{background:white;border-radius:22px;padding:25px;max-width:480px;margin:auto;box-shadow:0 5px 25px #000
+body{
+font-family:Arial,sans-serif;
+background:#f4f6fa;
+margin:0;
+padding:25px;
+text-align:center;
+color:#172033
+}
+
+.card{
+background:white;
+border-radius:22px;
+padding:25px;
+max-width:480px;
+margin:auto;
+box-shadow:0 5px 25px #0001
+}
+
+h1{
+font-size:30px
+}
+
+p{
+color:#667085;
+line-height:1.5
+}
+
+button{
+width:100%;
+padding:16px;
+margin-top:15px;
+border:0;
+border-radius:14px;
+background:#1769ff;
+color:white;
+font-size:17px;
+font-weight:bold
+}
+
+#camera{
+width:100%;
+margin-top:20px;
+border-radius:18px;
+background:#111
+}
+
+.hidden{
+display:none
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>PD Measure</h1>
+
+<p>
+Measure your pupil distance using your phone camera.
+</p>
+
+<button onclick="startCamera()">
+Start measurement
+</button>
+
+<video id="camera" class="hidden" autoplay playsinline></video>
+
+<button id="photo" class="hidden" onclick="takePhoto()">
+Take photo
+</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+let video=document.getElementById("camera");
+let stream;
+
+async function startCamera(){
+
+try{
+
+stream=await navigator.mediaDevices.getUserMedia({
+video:{facingMode:"user"},
+audio:false
+});
+
+video.srcObject=stream;
+
+video.classList.remove("hidden");
+
+document.getElementById("photo").classList.remove("hidden");
+
+}catch(error){
+
+alert("Please allow camera access.");
+
+}
+
+}
+
+function takePhoto(){
+
+document.getElementById("result").innerHTML=
+"<h2>Photo captured ✓</h2><p>Your PD measurement will appear here once the measurement system is added.</p>";
+
+}
+
+</script>
+
+</body>
+</html>
