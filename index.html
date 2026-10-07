@@ -84,6 +84,28 @@ alert("Please allow camera access.");
 }
 
 </script>
+  function takePhoto(){
+
+const video=document.getElementById("camera");
+const canvas=document.getElementById("canvas");
+
+canvas.width=video.videoWidth;
+canvas.height=video.videoHeight;
+
+const context=canvas.getContext("2d");
+
+context.drawImage(
+video,
+0,
+0,
+canvas.width,
+canvas.height
+);
+
+document.getElementById("result").innerHTML=
+"<h2>Photo captured ✓</h2><p>Your photo has been captured successfully.</p>";
+
+}
 
 </body>
 </html>
